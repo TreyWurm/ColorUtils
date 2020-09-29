@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#E0FFFFFF</color>
+    <color name="black">#ff000000</color>
+    <color name="default_color_primary">@color/white</color>
+    <color name="default_text_color">@color/black</color>
+    <color name="default_surface_color">@color/white</color>
+    <color name="default_ripple_color">#1F000000</color>
+</resources>
