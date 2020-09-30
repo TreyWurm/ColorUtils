@@ -2,7 +2,6 @@ package com.appmea.colorutils.library;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.TypedValue;
@@ -54,20 +53,27 @@ public class MaterialColorUtils {
 
     public StateListDrawable createRippleSurface() {
         StateListDrawable selector = new StateListDrawable();
-
-        selector.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(getColorRippleSurface()));
+        selector.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(rgbaToRGB(getColorSurface(), getColorRippleSurface())));
         selector.addState(new int[]{}, new ColorDrawable(getColorSurface()));
         return selector;
     }
 
-    public Color valueOf(@ColorInt int color) {
-        float r = ((color >> 16) & 0xff) / 255.0f;
-        float g = ((color >> 8) & 0xff) / 255.0f;
-        float b = ((color) & 0xff) / 255.0f;
-        float a = ((color >> 24) & 0xff) / 255.0f;
-        Color newColor = new Color();
-        Color opaqueRed = Color.valueOf(0xffff0000); // from a color int
-        Color translucentRed = Color.valueOf(1.0f, 0.0f, 0.0f, 0.5f);
-        return Color.argb(a, r, g, b);
+
+    protected @ColorInt
+    int rgbaToRGB(@ColorInt int background, @ColorInt int overlay) {
+        float alpha = (0xFF & (overlay >> 24)) / 255f;
+        float red = (0xFF & (overlay >> 16)) / 255f;
+        float green = (0xFF & (overlay >> 8)) / 255f;
+        float blue = (0xFF & (overlay)) / 255f;
+
+        float redBackground = 0xFF & (background >> 16);
+        float greenBackground = 0xFF & (background >> 8);
+        float blueBackground = 0xFF & (background);
+
+        float finalRed = (1 - alpha) * redBackground + alpha * red;
+        float finalGreen = (1 - alpha) * greenBackground + alpha * green;
+        float finalBlue = (1 - alpha) * blueBackground + alpha * blue;
+
+        return Color.rgb((int) finalRed, (int) finalGreen, (int) finalBlue);
     }
 }

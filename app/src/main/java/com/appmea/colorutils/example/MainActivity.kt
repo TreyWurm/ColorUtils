@@ -1,9 +1,9 @@
 package com.appmea.colorutils.example
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.ColorUtils
 import com.appmea.colorutils.library.MaterialColorUtils
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +13,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.tv_text).apply {
             setOnClickListener { }
-            background = colorUtils.createRippleSurface()
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                background = colorUtils.createRippleSurface()
+            }
         }
     }
 }
