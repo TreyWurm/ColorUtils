@@ -4,7 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.appmea.colorutils.library.MaterialColorUtils
+import com.appmea.colorutils.MaterialColorUtils
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

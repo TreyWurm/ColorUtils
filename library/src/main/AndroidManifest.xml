@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appmea.colorutils.library">
+    package="com.appmea.colorutils">
 
     /
 </manifest>
