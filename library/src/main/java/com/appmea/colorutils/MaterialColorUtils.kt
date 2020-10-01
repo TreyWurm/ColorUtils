@@ -61,6 +61,6 @@ class MaterialColorUtils(val context: Context) {
         val finalRed = (1 - alpha) * redBackground + alpha * red
         val finalGreen = (1 - alpha) * greenBackground + alpha * green
         val finalBlue = (1 - alpha) * blueBackground + alpha * blue
-        return Color.rgb(finalRed.toInt(), finalGreen.toInt(), finalBlue.toInt())
+        return Color.rgb((finalRed * 255f + 0.5f).toInt() shr 16, (finalGreen * 255f + 0.5f).toInt() shr 8, (finalBlue * 255f + 0.5f).toInt())
     }
 }
