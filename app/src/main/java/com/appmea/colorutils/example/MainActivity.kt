@@ -14,7 +14,9 @@ class MainActivity : AppCompatActivity() {
         val colorUtils = MaterialColorUtils(this)
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.tv_text).apply {
-            setOnClickListener { }
+            setOnClickListener {
+                colorUtils.createRippleSurface(this)
+            }
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 background = colorUtils.createRippleSurface(this)
             }

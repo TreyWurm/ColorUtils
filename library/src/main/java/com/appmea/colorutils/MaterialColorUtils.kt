@@ -57,11 +57,11 @@ class MaterialColorUtils(val context: Context) {
     fun createRippleSurface(view: View): StateListDrawable? {
         // We need an opaque background to overlay
         // We are gonna check backgrounds for first opaque background color or resort to WHITE as default
-        var colorSurface = getColorSurface()
+        val colorSurface = getColorSurface()
         val colorViewBackground = view.getRGBBackgroundColor()
         val colorBackground = getColorBackground()
 
-        var opaqueSurface = if (isOpaque(colorSurface)) {
+        val opaqueSurface = if (isOpaque(colorSurface)) {
             colorSurface
         } else if (colorViewBackground != null && isOpaque(colorViewBackground)) {
             overlayToRgb(colorViewBackground, colorSurface)
@@ -92,7 +92,7 @@ class MaterialColorUtils(val context: Context) {
     fun overlayToRgb(@ColorInt background: Int, @ColorInt overlay: Int): Int {
         var rgbBackground = background
         // Need a RGB background without alpha to work, so we get a RGB by combining transparent background with a solid white
-        if ((0xFF and (rgbBackground shr 24)) < 255) {
+        if (!isOpaque(rgbBackground)) {
             rgbBackground = overlayToRgb(Color.WHITE, background)
         }
         val alpha = (0xFF and (overlay shr 24)) / 255f
