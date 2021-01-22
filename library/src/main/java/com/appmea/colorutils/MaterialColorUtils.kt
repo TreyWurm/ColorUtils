@@ -6,7 +6,9 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.google.android.material.color.MaterialColors
 
 class MaterialColorUtils(val context: Context) {
@@ -144,5 +146,34 @@ class MaterialColorUtils(val context: Context) {
         } else {
             (0xFF and (int shr 24)) >= 255
         }
+    }
+
+
+    /**
+     * Darkens a given color
+     *
+     * @param base base color
+     * @param amount amount between 0 and 100
+     * @return darken color
+     */
+    fun darken(@ColorInt base: Int, @FloatRange(from = 0.0, to = 1.0) amount: Float): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(base, hsl)
+        hsl[2] = (hsl[2] - amount).coerceAtLeast(0f)
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    /**
+     * Lightens a given color
+     *
+     * @param base base color
+     * @param amount amount between 0 and 100
+     * @return lightened
+     */
+    fun lighten(@ColorInt base: Int, @FloatRange(from = 0.0, to = 1.0) amount: Float): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(base, hsl)
+        hsl[2] = (hsl[2] + amount).coerceAtMost(1f)
+        return ColorUtils.HSLToColor(hsl)
     }
 }
